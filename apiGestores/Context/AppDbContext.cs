@@ -14,6 +14,6 @@ namespace apiGestores.Context
         {
 
         }
-        public DbSet<Gestores_Bd> gestores_Bd;
+        public DbSet<Gestores_Bd> gestores_Bd { get; set; }
     }
 }
