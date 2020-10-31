@@ -10,6 +10,7 @@ function App() {
   const baseUrl="https://localhost:44341/api/gestores";
   const [data, setData]=useState([]);
   const [modalInsertar, setModalInsertar]=useState(false);
+  const [modalEditar, setModalEditar]=useState(false);
   const [gestorSeleccionado, setGestorSeleccionado]=useState({
     id: '',
     nombre: '',
@@ -31,6 +32,10 @@ function App() {
     setModalInsertar(!modalInsertar);
   }
 
+  const abrirCerrarModalEditar=()=>{
+    setModalEditar(!modalEditar);
+  }
+
   const peticionGet=async()=>{
     await axios.get(baseUrl)
      .then(response=>{
@@ -50,6 +55,11 @@ function App() {
      }).catch(error=>{
         console.log(error);
     })
+  }
+
+  const seleccionarGestor=(gestor,caso)=>{
+    (caso==="Editar")&&
+    abrirCerrarModalEditar();
   }
 
   useEffect(() => {
@@ -114,6 +124,35 @@ function App() {
          <ModalFooter>
            <button className="btn btn-primary" onClick={()=>peticionPost()}>Insertar</button>{"   "}
            <button className="btn btn-danger" onClick={()=>abrirCerrarModalInsertar()}>Cancelar</button> {"  "}
+         </ModalFooter>
+     </Modal>
+
+     <Modal isOpen={modalEditar}>
+       <ModalHeader>
+         Editar Gestor de Base de Datos</ModalHeader>
+         <ModalBody>
+           <div className="form-group">
+           <label>ID: </label>
+             <br />
+             <input type="text" className="form-group" readOnly/>
+             <br />
+             <label>Nombre: </label>
+             <br />
+             <input type="text" className="form-group" />
+             <br />
+             <label>Lanzamiento: </label>
+             <br />
+             <input type="text" className="form-group" />
+             <br />
+             <label>Desarrollador: </label>
+             <br />
+             <input type="text" className="form-group" />
+             <br />
+           </div>
+         </ModalBody>
+         <ModalFooter>
+           <button className="btn btn-primary">Editar</button>{"   "}
+           <button className="btn btn-danger" onClick={()=>abrirCerrarModalEditar()}>Cancelar</button> {"  "}
          </ModalFooter>
      </Modal>
     </div>
